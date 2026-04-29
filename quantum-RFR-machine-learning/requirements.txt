@@ -7,3 +7,11 @@ qiskit-aer
 pandas
 matplotlib
 pylatexenc
+
+
+# ####Optional dependencies for examples and tutorials
+#'qiskit-machine-learning[torch]'
+#'qiskit-machine-learning[sparse]'
+#nlopt
+#setuptools>=40.1
+#dill>=0.3.4
