@@ -4,7 +4,7 @@
 >> python -m venv .venv
 >> .venv\Scripts\Activate
 >> python.exe -m pip install --upgrade pip
->> pip install -r requitements.txt
+>> pip install -r requirements.txt
 
 # Run the code
 >> python main.py
