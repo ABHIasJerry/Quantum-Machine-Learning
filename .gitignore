@@ -3,3 +3,5 @@
 
 # Ignore all XML files
 *.xml
+*.iml
+*.idea
