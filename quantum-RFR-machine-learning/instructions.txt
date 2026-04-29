@@ -1,0 +1,20 @@
+# ----- Python Support : >=3.14
+# Setup the virtual environment
+
+>> python -m venv .venv
+>> .venv\Scripts\Activate
+>> python.exe -m pip install --upgrade pip
+>> pip install -r requitements.txt
+
+# Run the code
+>> python main.py
+
+# Docker commands
+# Build the image
+docker build -t quantum-rfr-ml-abhi .
+
+# Run the container
+docker run quantum-rfr-ml-abhi
+
+# Or run interactively
+docker run -it quantum-rfr-ml-abhi /bin/bash

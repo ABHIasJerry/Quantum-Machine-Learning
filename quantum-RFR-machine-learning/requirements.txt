@@ -1,0 +1,9 @@
+# Install these packages
+numpy
+scikit-learn
+qiskit
+qiskit-machine-learning
+qiskit-aer
+pandas
+matplotlib
+pylatexenc

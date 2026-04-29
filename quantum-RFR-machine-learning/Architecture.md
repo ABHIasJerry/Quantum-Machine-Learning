@@ -1,0 +1,57 @@
+
+@software{quantum_ml_2026,
+  author = {ABHIasJerry},
+  title = {Quantum Machine Learning},
+  year = {2026},
+  url = {https://github.com/ABHIasJerry/Quantum-Machine-Learning}
+}
+
+┌─────────────────────────────────────────────┐
+│   Input Features                            │
+└──────────────┬──────────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────────┐
+│   Feature Scaling & Selection               │
+│   (StandardScaler, Feature Sampling)        │
+└──────────────┬──────────────────────────────┘
+               │
+      ┌────────┴────────┐
+      │                 │
+      ▼                 ▼
+┌──────────────┐  ┌──────────────┐
+│ Quantum Tree │  │ Quantum Tree │  ... (n_estimators)
+│     #1       │  │     #2       │
+│              │  │              │
+│ Feature Map  │  │ Feature Map  │
+│   Circuit    │  │   Circuit    │
+│              │  │              │
+│ Kernel       │  │ Kernel       │
+│ Similarity   │  │ Similarity   │
+└──────┬───────┘  └──────┬───────┘
+       │                 │
+       └────────┬────────┘
+                │
+                ▼
+        ┌──────────────────┐
+        │ Average Pool     │
+        │ Aggregation      │
+        └────────┬─────────┘
+                 │
+                 ▼
+        ┌──────────────────┐
+        │ Final Prediction │
+        └────────┬─────────┘
+                 │
+                 ▼
+            ┌────────┐
+            │ Output │
+            └────────┘
+
+Feature Map (1 repetition):
+├─ RY(x₁) ─┐
+├─ RY(x₂) ─┼─ CNOT chain ─┐
+├─ RY(x₃) ─┤              │
+└─ RY(x₄) ─┴──────────────┘
+     ↓
+   Repeat

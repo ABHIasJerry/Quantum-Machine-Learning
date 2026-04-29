@@ -1,0 +1,84 @@
+#### Package details used for this project
+-------------------------------------------
+Name: numpy
+Version: 2.4.4
+Summary: Fundamental package for array computing in Python
+Home-page: https://numpy.org
+Author: Travis E. Oliphant et al.
+Author-email: 
+License-Expression: BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0
+Location: D:\1.Project\QUANTUM\quantum-random-forest-ML\.venv\Lib\site-packages
+Requires: 
+Required-by: contourpy, matplotlib, pandas, qiskit, qiskit-aer, qiskit-machine-learning, rustworkx, scikit-learn, scipy
+---------------------------------------------------
+Name: scikit-learn
+Version: 1.8.0
+Summary: A set of python modules for machine learning and data mining
+Home-page: https://scikit-learn.org
+Author: 
+Author-email: 
+License-Expression: BSD-3-Clause
+Location: D:\1.Project\QUANTUM\quantum-random-forest-ML\.venv\Lib\site-packages
+Requires: joblib, numpy, scipy, threadpoolctl
+Required-by: qiskit-machine-learning
+--------------------------------------------------------
+Name: qiskit
+Version: 2.4.1
+Summary: An open-source SDK for working with quantum computers at the level of extended quantum circuits, operators, and primitives.
+Home-page: https://www.ibm.com/quantum/qiskit
+Author: 
+Author-email: Qiskit Development Team <qiskit@us.ibm.com>
+License-Expression: Apache-2.0
+Location: D:\1.Project\QUANTUM\quantum-random-forest-ML\.venv\Lib\site-packages
+Requires: dill, numpy, rustworkx, scipy, stevedore, typing-extensions
+Required-by: qiskit-aer, qiskit-machine-learning
+-----------------------------------------------------------
+Name: qiskit-machine-learning
+Version: 0.9.0
+Summary: Qiskit Machine Learning: A library of quantum machine learning experiments
+Home-page: https://github.com/qiskit-community/qiskit-machine-learning
+Author: Qiskit Machine Learning Development Team
+Author-email: qiskit@us.ibm.com
+License: Apache-2.0
+Location: D:\1.Project\QUANTUM\quantum-random-forest-ML\.venv\Lib\site-packages
+Requires: dill, numpy, qiskit, scikit-learn, scipy, setuptools
+Required-by: 
+--------------------------------------------------------------
+Name: qiskit-aer
+Version: 0.17.2
+Summary: Aer - High performance simulators for Qiskit
+Home-page: https://github.com/Qiskit/qiskit-aer
+Author: AER Development Team
+Author-email: qiskit@us.ibm.com
+License: Apache 2.0
+Location: D:\1.Project\QUANTUM\quantum-random-forest-ML\.venv\Lib\site-packages
+Requires: numpy, psutil, python-dateutil, qiskit, scipy
+Required-by: 
+-------------------------------------------------------------------
+Name: pandas
+Version: 3.0.2
+Summary: Powerful data structures for data analysis, time series, and statistics
+Home-page: https://pandas.pydata.org
+Author: 
+Author-email: The Pandas Development Team <pandas-dev@python.org>
+License: BSD 3-Clause License
+----------------------------------------------------------------------
+Name: matplotlib
+Version: 3.10.9
+Summary: Python plotting package
+Home-page: https://matplotlib.org
+Author: John D. Hunter, Michael Droettboom
+Author-email: Unknown <matplotlib-users@python.org>
+License: License agreement for matplotlib versions 1.3.0 and later
+-------------------------------------------------------------------------
+Name: pylatexenc
+Version: 2.10
+Summary: Simple LaTeX parser providing latex-to-unicode and unicode-to-latex conversion
+Home-page: https://github.com/phfaist/pylatexenc
+Author: Philippe Faist
+Author-email: philippe.faist@bluewin.ch
+License: MIT
+Location: D:\1.Project\QUANTUM\quantum-random-forest-ML\.venv\Lib\site-packages
+Requires: 
+Required-by: 
+---------------------------------------------------------------------------
