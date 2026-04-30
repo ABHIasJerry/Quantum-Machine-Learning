@@ -282,6 +282,21 @@ def main():
 
     return q_model, rf_model, metadata
 
+def test():
+    """ To test the model predictions with custom data"""
+    from src.test import test
+    #############################################################################
+    values = [12.47,18.6,81.09,481.9,0.09965,0.1058,0.08005,
+              0.03821,0.1925,0.06373,0.3961,1.044,2.497,30.29,
+              0.006953,0.01911,0.02701,0.01037,0.01782,0.003586,
+              14.97,24.64,96.05,677.9,0.1426,0.2378,0.2671,0.1015,0.3014,0.0875]
+    ##############################################################################
+    test.test_predictions_with_custom_values(values)
+
 # Entry-point
 if __name__ == "__main__":
-    q_model, rf_model, metadata = main()
+    # To run and train models
+    # q_model, rf_model, metadata = main()
+
+    # To test models
+    test()
