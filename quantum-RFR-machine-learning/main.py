@@ -15,6 +15,7 @@ import sys
 import json
 import pickle
 import warnings
+import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -29,10 +30,9 @@ from src.pipeline.QuantumRFR import QuantumForestRegressor
 
 # Dataset [Optional]
 from sklearn.datasets import fetch_california_housing
-
 warnings.filterwarnings("ignore")
 
-def main():
+def train_model():
     """
     Main execution function demonstrating quantum model with California Housing dataset
     """
@@ -282,7 +282,7 @@ def main():
 
     return q_model, rf_model, metadata
 
-def test():
+def test_model():
     """ To test the model predictions with custom data"""
     from src.test import test
     with open("test.json") as f:
@@ -291,10 +291,26 @@ def test():
     print("Values got from test.json : -> ", values)
     test.test_predictions_with_custom_values(values)
 
+def main():
+    """ Main function """
+    parser = argparse.ArgumentParser(description="Select a function to run")
+    parser.add_argument(
+        "function",
+        choices=["train", "test"],
+        help="Choose which function to run"
+    )
+    args = parser.parse_args()
+    if args.function == "train":   # Train the model first
+        q_model, rf_model, metadata = train_model()
+    elif args.function == "test":  # Test the model after training
+        test_model()
+
 # Entry-point
 if __name__ == "__main__":
-    # # To run and train models
-    q_model, rf_model, metadata = main()
-
-    # # To test models
-    # test()
+    main()
+################################################################
+"""       
+Command line arguments : python main.py train
+                         python main.py test
+"""
+################################################################
