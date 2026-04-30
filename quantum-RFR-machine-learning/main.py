@@ -3,6 +3,7 @@
   author = {ABHIasJerry},
   title = {Quantum Machine Learning},
   year = {2026},
+  version = 1.0.3
   url = {https://github.com/ABHIasJerry/Quantum-Machine-Learning}
 }
 Quantum Machine Learning Model - Equivalent to Random Forest Regressor
@@ -40,8 +41,8 @@ def main():
     sys.stdout = open("logs/console-logs.txt", "w", encoding="utf-8")
 
     print("=" * 80)
-    print("QUANTUM MACHINE LEARNING: Forest Regressor Equivalent")
-    print("Dataset: User Defined | Framework: Qiskit")
+    print("QUANTUM MACHINE LEARNING: Random Forest Regressor Equivalent")
+    print("Dataset: Custom | OWNER: ABHIasJerry | Framework: Qiskit[2.4.1] | Python: 3.14")
     print("=" * 80)
 
     ######################### SKLEARN DATASET ############################
@@ -56,26 +57,18 @@ def main():
     # print(f"Features: {', '.join(feature_names)}")
     # print(f"Target range: [{y.min():.2f}, {y.max():.2f}]")
     ########################################################################
-
-    ############################## DATASET ################################
+    #### USE ANY ONE AT A TIME ###         ### THANK YOU.HAVE A NICE DAY ###
+    ############################## DATASET #################################
     print("\n[1] Loading Target Dataset...")
-    files = os.listdir("docs")
-    csv_files = [f for f in files if f.endswith(".csv")]
-    if csv_files:
-        selected_file = os.path.join("docs", csv_files[0])  # pick the first one
-        print("Selected file:", selected_file)
-    else:
-        print("No CSV files found in docs.")
-
-    analyzer = DatasetAnalyzer(selected_file)
+    analyzer = DatasetAnalyzer("docs/")
+    # data = analyzer._get_dataset()
+    data = analyzer._filterout_stringtypes_from_df()
+    data = data.fillna(data.mean(numeric_only=True))
     feature_names = analyzer._get_feature_names()
     print("Features: ", feature_names)
     print("DF shape: ", analyzer._get_shape())
-
-    data = pd.read_csv(selected_file)
-    target_column = "target"  # edit the target column
-
-    # data = data[target_column].astype("float64")   # convert the datatypes to same
+    last_col = data.columns[-1]  # get the name of the last column name as target for predictions
+    target_column = str(last_col)  # Example:  target_column = "SalePrice"
 
     X = data.drop(columns=[target_column]).to_numpy()
     y = data[target_column].to_numpy()
@@ -148,12 +141,22 @@ def main():
     print("PERFORMANCE COMPARISON")
     print("=" * 80)
 
-    comparison_df = pd.DataFrame({
-        'Metric': ['MSE', 'MAE', 'R² Score'],
-        'Random Forest': [f'{rf_mse:.6f}', f'{rf_mae:.6f}', f'{rf_r2:.6f}'],
-        'Quantum Model': [f'{q_mse:.6f}', f'{q_mae:.6f}', f'{q_r2:.6f}']
-    })
+    comparison_df = {
+                    'Metric': ['MSE', 'MAE', 'R² Score'],
+                    'Random Forest': [f'{rf_mse:.6f}', f'{rf_mae:.6f}', f'{rf_r2:.6f}'],
+                    'Quantum Model': [f'{q_mse:.6f}', f'{q_mae:.6f}', f'{q_r2:.6f}']
+                    }
 
+    try:
+        model_dir = 'metrics'
+        os.makedirs(model_dir, exist_ok=True)
+        with open("metrics/metrics.json", "w") as json_file:
+            json.dump(comparison_df, json_file, indent=4)
+        print("Model metrics saved in metrics.json")
+    except IOError as e:
+        print(f"Error writing metrics to file: {e}")
+
+    comparison_df = pd.DataFrame(comparison_df)
     print(comparison_df.to_string(index=False))
     print("=" * 80)
 
@@ -217,7 +220,7 @@ def main():
     print("Predictions comparison saved to 'plots/predictions_comparison.png'")
 
     # Feature importance (from RF model)
-    print("\n[7.1] Feature Importance Analysis...")
+    print("\n[8] Feature Importance Analysis...")
     feature_names_copy = feature_names.copy()
     feature_names_copy.remove(target_column)
     importance_df = pd.DataFrame({
@@ -239,10 +242,10 @@ def main():
     plt.savefig('plots/feature-importances.png', dpi=150, bbox_inches='tight')
     plt.close()
 
-    print("\n[8] Model Metadata...")
+    print("\n[9] Model Metadata...")
     metadata = {
-        'model_name': 'Quantum Forest Regressor v1.0',
-        'dataset': 'User Defined',
+        'model_name': 'Quantum Random Forest Regressor Eqv. v1.0.3',
+        'dataset': f'{analyzer._get_training_dataset_name()}',
         'dataset_samples': len(X),
         'training_samples': len(X_train),
         'test_samples': len(X_test),
@@ -252,27 +255,29 @@ def main():
         'learning_rate': q_model.learning_rate,
         'epochs_trained': q_model.maxiter,
         'final_loss': q_model.training_history['loss'][-1],
-        'test_mse': float(q_mse),
-        'test_mae': float(q_mae),
-        'test_r2': float(q_r2),
+        'Q-test_mse': float(q_mse),
+        'Q-test_mae': float(q_mae),
+        'Q-test_r2': float(q_r2),
         'auto_qubit_method': q_model.auto_qubit_method,
-        'description': 'Quantum ML model equivalent to Random Forest Regressor using Qiskit'
+        'description': 'Quantum Random Forest Regressor ML Eqv model training using IBM Qiskit'
     }
 
     for key, value in metadata.items():
         print(f"{key}: {value}")
 
     # Plot predictions comparison
-    print("\n[9] Saving the model metadata...")
+    print("\n[10] Saving the model metadata...")
     try:
-        with open("metadata.txt", "w", encoding="utf-8") as file:
+        model_dir = 'metadata'
+        os.makedirs(model_dir, exist_ok=True)
+        with open("metadata/metadata.txt", "w", encoding="utf-8") as file:
             json.dump(metadata, file, indent=4)  # indent for readability
         print("Metadata successfully saved to metadata.txt")
     except IOError as e:
         print(f"Error writing to file: {e}")
 
     print("\n" + "=" * 80)
-    print("Quantum ML model training completed successfully!")
+    print("Quantum ML model & Classical ML model trainings completed successfully!")
     print("=" * 80)
 
     return q_model, rf_model, metadata

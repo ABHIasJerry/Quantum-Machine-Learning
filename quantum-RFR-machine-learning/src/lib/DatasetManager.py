@@ -1,7 +1,20 @@
-import pandas as pd
-import numpy as np
-from typing import Dict, List, Tuple, Any, Hashable
+#########################################################################################
+# FILE NAME : DATASETMANAGER
+# AUTHOR : ABHINABA GHOSH
+# VERSION : 1.6
+# YEAR : 2026  [April 30]
+# DESCRIPTION : PROCESSES TH DATASET EFFICIENTLY
+# COPYRIGHT : ALL RIGHTS RESERVED BY OWNER
+##########################################################################################
+
+import os
 import warnings
+import numpy as np
+import pandas as pd
+from pathlib import Path
+from pandas import DataFrame
+from pandas.io.parsers import TextFileReader
+from typing import Dict, List, Tuple, Any, Hashable
 warnings.filterwarnings("ignore")
 
 class DatasetAnalyzer:
@@ -16,9 +29,21 @@ class DatasetAnalyzer:
         Args:
             csv_path: Path to the CSV file
         """
-        self.csv_path = csv_path
-        self.df = pd.read_csv(csv_path)
+        self.csv_path = Path(csv_path)
+        self.files = [f for f in self.csv_path.iterdir() if f.is_file()]
+        self.files_sorted = sorted(self.files, key=lambda f: f.stat().st_mtime, reverse=True)
+        print("Selected dataset for training: -> ", self.files_sorted[0].name)
+        self.csv_path = os.path.join(self.csv_path, self.files_sorted[0].name)  # pick the latest dataset always
+        self.df = pd.read_csv(self.csv_path)
         self.details = {}
+
+    def _get_training_dataset_name(self) -> str:
+        """Get training dataset name"""
+        return self.files_sorted[0].name
+
+    def _get_dataset(self) -> TextFileReader | DataFrame:
+        """To get the dataset for training"""
+        return self.df
 
     def extract_all_details(self) -> Dict[str, Any]:
         """
@@ -50,6 +75,13 @@ class DatasetAnalyzer:
     def _get_feature_names(self) -> List[str]:
         """Get all feature names"""
         return self.df.columns.tolist()
+
+    def _filterout_stringtypes_from_df(self) -> pd.DataFrame:
+        """Filter string types from dataframe"""
+        data = self.df
+        df_numeric = data.select_dtypes(include=['number'])
+        self.df = df_numeric
+        return self.df
 
     def _get_feature_dtypes(self) -> Dict[str, str]:
         """Get data type for each feature"""
