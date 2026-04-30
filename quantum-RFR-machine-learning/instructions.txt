@@ -10,6 +10,10 @@
 Command line arguments : python main.py train
                          python main.py test
 
+# Test model
+>> Before testing, update the test.json value list with exact shape of sample data
+[Refer from the prediction csv sample files for correct number of features and values.]
+
 # Docker commands
 # Build the image
 docker build -t quantum-rfr-ml-abhi .
