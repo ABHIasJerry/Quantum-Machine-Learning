@@ -119,8 +119,8 @@ def train_model():
         n_layers=5,
         optimizer='COBYLA',
         maxiter=50,
-        auto_qubit_method='entropy'
-    )  # optimizer = COBYLA / SPSA / QNG | auto_qubit_method =
+        auto_qubit_method='feature_importance'
+    )  # optimizer = COBYLA / SPSA / QNG | auto_qubit_method = feature_importance / dimension / entropy
 
     # fit() now includes circuit visualization
     q_model.fit(X_train, y_train, visualize_circuit=True)

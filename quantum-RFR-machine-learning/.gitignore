@@ -21,3 +21,10 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+# Exclude subfolders generated after run
+metadata/
+logs/
+metrics/
+model/
+plots/
+predictions/
