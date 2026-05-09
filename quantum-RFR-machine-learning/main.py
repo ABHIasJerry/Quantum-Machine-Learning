@@ -117,10 +117,10 @@ def train_model():
 
     q_model = QuantumForestRegressor(
         n_layers=5,
-        learning_rate=0.01,
+        optimizer='COBYLA',
         maxiter=50,
         auto_qubit_method='entropy'
-    )
+    )  # optimizer = COBYLA / SPSA / QNG | auto_qubit_method =
 
     # fit() now includes circuit visualization
     q_model.fit(X_train, y_train, visualize_circuit=True)
@@ -252,7 +252,6 @@ def train_model():
         'n_features': X.shape[1],
         'n_qubits': q_model.n_qubits,
         'n_layers': q_model.n_layers,
-        'learning_rate': q_model.learning_rate,
         'epochs_trained': q_model.maxiter,
         'final_loss': q_model.training_history['loss'][-1],
         'Q-test_mse': float(q_mse),
@@ -285,7 +284,7 @@ def train_model():
 def test_model():
     """ To test the model predictions with custom data"""
     from src.test import test
-    with open("test.json") as f:
+    with open("src/test/test.json") as f:
         config = json.load(f)
     values = config["parameters"]["values"]
     print("Values got from test.json : -> ", values)

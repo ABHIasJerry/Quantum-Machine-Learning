@@ -3,11 +3,11 @@ numpy
 scikit-learn
 qiskit
 qiskit-machine-learning
+qiskit-algorithms
 qiskit-aer
 pandas
 matplotlib
 pylatexenc
-
 
 # ####Optional dependencies for examples and tutorials
 #'qiskit-machine-learning[torch]'

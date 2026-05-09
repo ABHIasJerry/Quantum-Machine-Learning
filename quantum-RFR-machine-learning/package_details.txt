@@ -55,6 +55,17 @@ Location: D:\1.Project\QUANTUM\quantum-random-forest-ML\.venv\Lib\site-packages
 Requires: numpy, psutil, python-dateutil, qiskit, scipy
 Required-by: 
 -------------------------------------------------------------------
+Name: qiskit-algorithms
+Version: 0.4.0
+Summary: Qiskit Algorithms: A library of quantum computing algorithms
+Home-page: https://github.com/qiskit-community/qiskit-algorithms
+Author: Qiskit Algorithms Development Team
+Author-email: qiskit@us.ibm.com
+License: Apache-2.0
+Location: D:\1.Project\QUANTUM\New folder\Quantum-Machine-Learning\.venv\Lib\site-packages
+Requires: numpy, qiskit, scipy
+Required-by:
+-----------------------------------------------------------------------
 Name: pandas
 Version: 3.0.2
 Summary: Powerful data structures for data analysis, time series, and statistics
