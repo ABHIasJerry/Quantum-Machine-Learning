@@ -8,6 +8,8 @@ qiskit-aer
 pandas
 matplotlib
 pylatexenc
+fastapi
+pydantic
 
 # ####Optional dependencies for examples and tutorials
 #'qiskit-machine-learning[torch]'
