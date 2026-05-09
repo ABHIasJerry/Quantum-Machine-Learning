@@ -20,12 +20,15 @@ from sklearn.ensemble import RandomForestRegressor
 
 # QISKIT Libraries
 from qiskit.circuit import ParameterVector
+from qiskit_aer.primitives import Estimator
 from qiskit_algorithms.optimizers import COBYLA, SPSA
+from qiskit_machine_learning.neural_networks import EstimatorQNN
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
+from qiskit_machine_learning.algorithms import NeuralNetworkRegressor
 
 warnings.filterwarnings('ignore')
 
-
+# CLASS : Auto Qubit Selector
 class AutoQubitSelector:
     """
     Automatically estimates optimal number of qubits based on dataset characteristics
@@ -52,7 +55,7 @@ class AutoQubitSelector:
 
         return int(estimated_qubits)
 
-
+# CLASS : Quantum Forest Regressor
 class QuantumForestRegressor:
     """
     Quantum Machine Learning model equivalent to Random Forest Regressor
@@ -175,3 +178,66 @@ class QuantumForestRegressor:
         predictions = np.array(predictions)
         predictions = self.output_scaler.inverse_transform(predictions.reshape(-1, 1)).flatten()
         return predictions
+
+# CLASS Quantum Forest Regressor [EstimatorQNN]
+class QuantumForestRegressorQNN:
+    """
+    Quantum Machine Learning Regressor using Qiskit's EstimatorQNN
+    """
+
+    def __init__(self, n_qubits=4, n_layers=2, optimizer=None, maxiter=100):
+        self.n_qubits = n_qubits
+        self.n_layers = n_layers
+        self.maxiter = maxiter
+        self.scaler = StandardScaler()
+        self.output_scaler = StandardScaler()
+
+        # Default optimizer
+        self.optimizer = optimizer or COBYLA(maxiter=maxiter)
+
+        # Build circuit + QNN
+        self.params = ParameterVector("θ", length=self.n_qubits * self.n_layers * 2)
+        self.circuit = self._build_circuit()
+        self.qnn = EstimatorQNN(
+            circuit=self.circuit,
+            input_params=self.circuit.parameters[:self.n_qubits],  # feature encoding
+            weight_params=self.circuit.parameters[self.n_qubits:], # trainable weights
+            estimator=Estimator()
+        )
+
+        # Wrap into a regressor
+        self.regressor = NeuralNetworkRegressor(
+            neural_network=self.qnn,
+            optimizer=self.optimizer,
+            loss="squared_error",
+            maxiter=self.maxiter
+        )
+
+    def _build_circuit(self):
+        qc = QuantumCircuit(self.n_qubits)
+        # Feature encoding
+        for i in range(self.n_qubits):
+            qc.ry(self.params[i], i)
+
+        # Variational layers
+        idx = self.n_qubits
+        for _ in range(self.n_layers):
+            for i in range(self.n_qubits):
+                qc.ry(self.params[idx], i)
+                idx += 1
+                qc.rz(self.params[idx], i)
+                idx += 1
+            for i in range(self.n_qubits - 1):
+                qc.cx(i, i+1)
+        return qc
+
+    def fit(self, X, y):
+        X_scaled = self.scaler.fit_transform(X)
+        y_scaled = self.output_scaler.fit_transform(y.reshape(-1, 1)).flatten()
+        self.regressor.fit(X_scaled, y_scaled)
+        return self
+
+    def predict(self, X):
+        X_scaled = self.scaler.transform(X)
+        preds = self.regressor.predict(X_scaled)
+        return self.output_scaler.inverse_transform(preds.reshape(-1, 1)).flatten()
