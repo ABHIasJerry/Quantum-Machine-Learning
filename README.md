@@ -47,8 +47,11 @@ A quantum-enhanced version of the classical Random Forest Regressor that uses qu
 ## Installation
 
 ### Prerequisites
-- Python 3.8 or higher
-- pip or conda
+- Python 3.14 or higher
+- pip
+
+### USING API via POSTMAN
+<img width="638" height="412" alt="image" src="https://github.com/user-attachments/assets/11784390-7e6b-4b26-bb61-c82b738329be" />
 
 ### Install from Repository
 
@@ -56,7 +59,3 @@ A quantum-enhanced version of the classical Random Forest Regressor that uses qu
 ```bash
 git clone https://github.com/ABHIasJerry/Quantum-Machine-Learning.git
 cd Quantum-Machine-Learning
-
-### USING API via POSTMAN
-<img width="638" height="412" alt="image" src="https://github.com/user-attachments/assets/11784390-7e6b-4b26-bb61-c82b738329be" />
-
