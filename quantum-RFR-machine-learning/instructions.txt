@@ -9,6 +9,7 @@
 # Run the code
 Command line arguments : python main.py train
                          python main.py test
+                         fastapi dev app.py [ for getting predictions using api call ]
 
 # Test model
 >> Before testing, update the src/test/test.json value list with exact shape of sample data
@@ -26,3 +27,22 @@ docker run -it quantum-rfr-ml-abhi /bin/bash
 
 # If script has input/output files
 docker run --rm -v $(pwd):/app quantum-rfr-ml-abhi
+
+########################################################
+
+# How to use the api prediction call
+# PAYLOAD
+
+"""
+POST -> http://127.0.0.1:8000/predict
+INPUT
+{
+  "values": [....]  -> pass the list of test values to make a prediction
+}
+
+OUTPUT
+{
+    "quantum_prediction": 0.7258717182277986,
+    "classical_prediction": 1.0
+}
+"""

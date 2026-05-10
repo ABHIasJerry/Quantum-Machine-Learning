@@ -3,9 +3,10 @@ import pickle
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.responses import HTMLResponse
 
 # Initialize FastAPI app
-app = FastAPI()   # http://127.0.0.1:8000/predict
+app = FastAPI()
 
 # Load models once at startup
 current_dir = os.getcwd()
@@ -22,6 +23,56 @@ with open(cm_file_path, "rb") as cm:
 # Define request schema
 class InputValues(BaseModel):
     values: list  # expects a list of feature values in order
+
+@app.get("/", response_class=HTMLResponse)
+async def welcome():
+    html_content = """
+    <html>
+        <head>
+            <title>Quantum Prediction API - v1</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f0f8ff;
+                    text-align: center;
+                    padding-top: 100px;
+                }
+                h1 {
+                    color: #2e8b57;
+                }
+                p {
+                    font-size: 18px;
+                    color: #555;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>🌟 Welcome to Abhinaba's Quantum Prediction API! 🌟</h1>
+            <h2>🔮 API Prediction Call 🔮</h2>
+        
+            <p>Send a POST request to the FastAPI endpoint:</p>
+            <p><strong>Endpoint:</strong> http://127.0.0.1:8000/predict</p>
+        
+            <p><strong>JSON Payload Example:</strong></p>
+            <pre>
+        {
+          "values": [12.47,18.6,81.09, .....]   // pass the value list
+        }
+            </pre>
+        
+            <p><strong>Response Example:</strong></p>
+            <pre>
+        {
+          "quantum_prediction": 0.7258717182277986,
+          "classical_prediction": 1.0
+        }
+            </pre>
+        
+            <p>This instruction should be followed while using the API call in POSTMAN / ...</p>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
 
 @app.post("/predict")
 def predict(input_data: InputValues):
@@ -42,20 +93,3 @@ def predict(input_data: InputValues):
         "quantum_prediction": Q_predictions[0],
         "classical_prediction": C_predictions[0]
     }
-
-
-############################################################################
-
-# PAYLOAD
-
-"""
-INPUT
-{
-  "values": [5.1, 3.5, 1.4, 0.2]
-}
-
-OUTPUT
-{
-  "quantum_prediction": 5.1,
-  "classical_prediction": 3.5,
-"""

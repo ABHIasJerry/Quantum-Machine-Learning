@@ -8,7 +8,7 @@ qiskit-aer
 pandas
 matplotlib
 pylatexenc
-fastapi
+fastapi[standard]
 pydantic
 
 # ####Optional dependencies for examples and tutorials
