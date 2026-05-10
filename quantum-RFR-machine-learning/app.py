@@ -1,3 +1,13 @@
+"""
+@software{main_2026,
+  author = {ABHIasJerry},
+  title = {Quantum Machine Learning},
+  year = {2026},
+  version = 1.0.0
+  url = {https://github.com/ABHIasJerry/Quantum-Machine-Learning}
+}
+Predictions using API call
+"""
 import os
 import pickle
 import pandas as pd
