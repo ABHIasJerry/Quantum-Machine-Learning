@@ -94,6 +94,23 @@ def get_system_status(component_name: str) -> str:
     """Fetches the operational status of internal enterprise infrastructure."""
     return f"Component '{component_name}' is healthy and running optimally."
 
+@mcp_server.tool()
+async def list_tools_info() -> list[dict]:
+    """
+    Lists all tools registered on this MCP server along with their name,
+    description, and input schema. Call this to discover what capabilities
+    are available on this server.
+    """
+    tools = await mcp_server.get_tools()  # returns dict[str, Tool]
+    result = []
+    for tool_name, tool_obj in tools.items():
+        result.append({
+            "name": tool_name,
+            "description": tool_obj.description or "No description provided.",
+            "input_schema": tool_obj.parameters,  # JSON Schema dict of input params
+        })
+    return result
+
 # =====================================================================
 # 5. COMBINED ROUTING AND TRANSPORT
 # =====================================================================
